@@ -1,0 +1,95 @@
+from collections import deque
+
+
+def rev_text_stacks(text):
+    stack = []
+    j = []
+    for i in text:
+        stack.append(i)
+    while stack:
+        k = stack.pop()
+        j.append(k)
+    return "".join(j)
+
+
+def rev_text(text):
+    return text[::-1]
+
+
+def matching_brackets(exp):
+    s = []
+    result = []
+    for index in range(len(exp)):
+        ch = exp[index]
+        if ch == "(":
+            s.append(index)
+        elif ch == ")":
+            last = s.pop()
+            result.append(exp[last:index + 1])
+    return result
+
+
+# print(matching_brackets("1 + (2 -(2+3) * 4 / (3 + 1 )) % 6"))
+
+def supermarket():
+    people = deque()
+    while True:
+        command = input()
+        if command == "End":
+            print(f"{len(people)} people remaining")
+            break
+        elif command == "Paid":
+            while people:
+                print(people.popleft())
+        else:
+            people.append(command)
+
+
+# supermarket()
+
+
+def waterdispenser():
+    water = int(input())
+    people = deque()
+    while True:
+        person = input()
+        if person == "Start":
+            break
+        people.append(person)
+    while True:
+        command = input().split(" ")
+        if command[0] == "End":
+            print(f"{water} litres left")
+            break
+        elif command[0] == "Refill":
+            water += int(command[1])
+        else:
+            person_water = int(command[0])
+            person = people.popleft()
+            if person_water <= water:
+                water -= person_water
+                print(f"{person} got water")
+            else:
+                print(f"{person} must wait")
+
+
+# waterdispenser()
+
+def hotpotato(people, count):
+    people = deque(people)
+    index = 0
+    while people:
+        index += 1
+        person = people.popleft()
+        if index == count:
+            if people:
+                index = 0
+                print(f"Removed {person}")
+            else:
+                print(f"Last is {person}")
+        else:
+            people.append(person)
+
+
+# hotpotato('George Peter Michael William Thomas'.split(' '), 10)
+# hotpotato(input().split(" "), int(input()))
